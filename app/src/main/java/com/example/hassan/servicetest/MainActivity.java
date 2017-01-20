@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent i = new Intent(getApplicationContext(),MyService.class);
                         startService(i);
+
+                        Toast.makeText(getApplicationContext(),"service started",Toast.LENGTH_LONG).show();
                     }
                 }
         );
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(getApplicationContext(),MyService.class);
+
+                        Toast.makeText(getApplicationContext(),"Service stopped",Toast.LENGTH_LONG).show();
                     }
                 }
         );
