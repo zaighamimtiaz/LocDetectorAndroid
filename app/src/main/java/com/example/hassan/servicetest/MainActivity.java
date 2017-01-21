@@ -15,6 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btn1,btn2;
@@ -29,9 +37,35 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onReceive(Context context, Intent intent) {
 
-                    String str = intent.getExtras().getString("coordinates");
+                    String latitude = intent.getExtras().getString("latitude");
+                    String longitude = intent.getExtras().getString("longitude");
 
-                    Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
+                    String url = "http://192.168.1.104:3000/locations";
+
+                    JSONObject obj = new JSONObject();
+
+                    try {
+                        obj.put("latitude", latitude);
+                        obj.put("longitude",longitude);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                            Request.Method.POST, url,obj, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Something went Wrong ...!!!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    );
+                    AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+
+                    // Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
                 }
             };
         }

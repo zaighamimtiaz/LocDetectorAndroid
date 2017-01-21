@@ -40,7 +40,8 @@ public class MyService extends Service {
                 String lat = String.valueOf(location.getLatitude());
                 String lon = String.valueOf(location.getLongitude());
 
-                i.putExtra("coordinates", "lat : " + lat + " " + "lon : " + lon);
+                i.putExtra("latitude", lat);
+                i.putExtra("longitude", lon);
 
                 sendBroadcast(i);
 
