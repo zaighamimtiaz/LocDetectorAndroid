@@ -10,17 +10,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.hassan.servicetest.MainActivity">
 
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp"
-        android:id="@+id/btn1" />
 
     <Button
-        android:text="Button"
+        android:text="Sign Out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn1"
@@ -28,4 +20,34 @@
         android:layout_alignEnd="@+id/btn1"
         android:layout_marginTop="65dp"
         android:id="@+id/btn2" />
+
+    <Button
+        android:text="Sign In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn1"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:id="@+id/userId"
+        android:hint="User Id" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/password"
+        android:layout_below="@+id/userId"
+        android:layout_alignLeft="@+id/userId"
+        android:layout_alignStart="@+id/userId"
+        android:hint="Password" />
 </RelativeLayout>
