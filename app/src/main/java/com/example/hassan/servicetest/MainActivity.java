@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private Button btn1,btn2;
+    private EditText userId,pass;
     private BroadcastReceiver broadcastReceiver;
 
     @Override
@@ -88,9 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
         btn1 = (Button)findViewById(R.id.btn1);
         btn2 = (Button)findViewById(R.id.btn2);
-
-
-
+        userId = (EditText)findViewById(R.id.userId);
+        pass = (EditText)findViewById(R.id.password);
 
 
         if(!runtime_permissions())
@@ -103,10 +104,54 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(getApplicationContext(),MyService.class);
-                        startService(i);
 
-                        Toast.makeText(getApplicationContext(),"service started",Toast.LENGTH_LONG).show();
+                        String emailid , password;
+                        String url = "http://192.168.1.104:3000/users/login";
+
+                        emailid = userId.getText().toString();
+                        password = pass.getText().toString();
+
+                        if ( emailid.equals("") || password.equals("") ){
+                            Toast.makeText(getApplicationContext(),"Fill Credentials...!!!",Toast.LENGTH_SHORT).show();
+                        }
+
+                        else {
+
+                            JSONObject obj = new JSONObject();
+
+                            try {
+                                obj.put("emailid", emailid);
+                                obj.put("password",password);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                                    Request.Method.POST, url,obj, new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+
+                                    if ( response.has("msg") )
+                                        Toast.makeText(getApplicationContext(),"Incorrect User Id or Password...!!!",
+                                                Toast.LENGTH_SHORT).show();
+                                    else
+                                    {
+                                        Intent i = new Intent(getApplicationContext(),MyService.class);
+                                        startService(i);
+
+                                        Toast.makeText(getApplicationContext(),"service started",Toast.LENGTH_LONG).show();
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Something went Wrong ...!!!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            );
+                            AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+                        }
                     }
                 }
         );
@@ -116,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(getApplicationContext(),MyService.class);
+                        stopService(i);
 
                         Toast.makeText(getApplicationContext(),"Service stopped",Toast.LENGTH_LONG).show();
                     }
