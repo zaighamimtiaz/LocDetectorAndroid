@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
                     String latitude = intent.getExtras().getString("latitude");
                     String longitude = intent.getExtras().getString("longitude");
 
-                    // String url = "http://192.168.1.104:3000/locations";
-                    String url = "http://192.168.1.104:3000/users/" + uId + "/locations";
+                    // String url = "https://fyp-loc-detect.herokuapp.com/locations";
+                    String url = "https://fyp-loc-detect.herokuapp.com/users/" + uId + "/locations";
 
                     JSONObject obj = new JSONObject();
 
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         String emailid , password;
-                        String url = "http://192.168.1.104:3000/users/login";
+                        String url = "https://fyp-loc-detect.herokuapp.com/users/login";
 
                         emailid = userId.getText().toString();
                         password = pass.getText().toString();
