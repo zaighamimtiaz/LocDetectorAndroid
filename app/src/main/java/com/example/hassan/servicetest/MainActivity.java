@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btn1,btn2;
     private EditText userId,pass;
     private BroadcastReceiver broadcastReceiver;
+    private int uId;
 
     @Override
     protected void onResume() {
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
                     String latitude = intent.getExtras().getString("latitude");
                     String longitude = intent.getExtras().getString("longitude");
 
-                    String url = "http://192.168.1.104:3000/locations";
+                    // String url = "http://192.168.1.104:3000/locations";
+                    String url = "http://192.168.1.104:3000/users/" + uId + "/locations";
 
                     JSONObject obj = new JSONObject();
 
@@ -135,10 +137,16 @@ public class MainActivity extends AppCompatActivity {
                                                 Toast.LENGTH_SHORT).show();
                                     else
                                     {
-                                        Intent i = new Intent(getApplicationContext(),MyService.class);
-                                        startService(i);
+                                        try {
+                                            uId = response.getInt("id");
 
-                                        Toast.makeText(getApplicationContext(),"service started",Toast.LENGTH_LONG).show();
+                                            Intent i = new Intent(MainActivity.this,MyService.class);
+                                            startService(i);
+
+                                            Toast.makeText(getApplicationContext(),"service started",Toast.LENGTH_LONG).show();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
 
                                 }
