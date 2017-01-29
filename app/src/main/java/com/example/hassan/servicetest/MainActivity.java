@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     String longitude = intent.getExtras().getString("longitude");
 
                     // String url = "https://fyp-loc-detect.herokuapp.com/locations";
-                    String url = "http://192.168.1.104:3000/users/" + uId + "/locations";
+                    String url = "https://fyp-loc-detect.herokuapp.com/users/" + uId + "/locations";
 
                     JSONObject obj = new JSONObject();
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         FirebaseMessaging.getInstance().subscribeToTopic("news");
 
                         String emailid , password;
-                        String url = "http://192.168.1.104:3000/users/login";
+                        String url = "https://fyp-loc-detect.herokuapp.com/users/login";
 
                         emailid = userId.getText().toString();
                         password = pass.getText().toString();
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(getApplicationContext(),MyService.class);
                         stopService(i);
 
-                        String url = "http://192.168.1.104:3000/users/" + uId + "/locations/deleteAll";
+                        String url = "https://fyp-loc-detect.herokuapp.com/users/" + uId + "/locations/deleteAll";
                         JSONObject jsonObject = new JSONObject();
 
                         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
