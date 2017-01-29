@@ -14,6 +14,8 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMessagingService";
@@ -24,19 +26,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Log.d(TAG,"From : " + remoteMessage.getFrom());
-
-        // Check if the message contains data
-
-        if (remoteMessage.getData().size() > 0)
-            Log.d(TAG,"Message Data : " + remoteMessage.getData());
-
-        // Check if the message contains notification
-
-        if (remoteMessage.getNotification().getBody() != null){
-            Log.d(TAG,"Message Body : " + remoteMessage.getNotification().getBody());
-            sendNotification(remoteMessage.getNotification().getBody());
-        }
+        Map m1 ;
+        m1 = remoteMessage.getData();
+        sendNotification(m1.get("message").toString());
     }
 
     private void sendNotification(String body) {
