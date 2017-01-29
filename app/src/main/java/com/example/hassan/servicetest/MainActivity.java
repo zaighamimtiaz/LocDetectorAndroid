@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     String longitude = intent.getExtras().getString("longitude");
 
                     // String url = "https://fyp-loc-detect.herokuapp.com/locations";
-                    String url = "https://fyp-loc-detect.herokuapp.com/users/" + uId + "/locations";
+                    String url = "http://192.168.1.104:3000/users/" + uId + "/locations";
 
                     JSONObject obj = new JSONObject();
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         FirebaseMessaging.getInstance().subscribeToTopic("news");
 
                         String emailid , password;
-                        String url = "https://fyp-loc-detect.herokuapp.com/users/login";
+                        String url = "http://192.168.1.104:3000/users/login";
 
                         emailid = userId.getText().toString();
                         password = pass.getText().toString();
@@ -174,7 +174,24 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(getApplicationContext(),MyService.class);
                         stopService(i);
 
-                        Toast.makeText(getApplicationContext(),"Service stopped",Toast.LENGTH_LONG).show();
+                        String url = "http://192.168.1.104:3000/users/" + uId + "/locations/deleteAll";
+
+                        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                                Request.Method.DELETE, url,null, new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                                Toast.makeText(getApplicationContext(),"Service stopped",Toast.LENGTH_LONG).show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Something went Wrong ...!!!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        );
+                        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
                     }
                 }
         );
