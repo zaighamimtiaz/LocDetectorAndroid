@@ -175,9 +175,10 @@ public class MainActivity extends AppCompatActivity {
                         stopService(i);
 
                         String url = "http://192.168.1.104:3000/users/" + uId + "/locations/deleteAll";
+                        JSONObject jsonObject = new JSONObject();
 
                         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                                Request.Method.DELETE, url,null, new Response.Listener<JSONObject>() {
+                                Request.Method.DELETE, url,jsonObject, new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
 
